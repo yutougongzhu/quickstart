@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public class one extends Application {
+    Stage stage1 ;
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/one.fxml"));
@@ -39,7 +40,7 @@ public class one extends Application {
             @Override
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode()== KeyCode.ESCAPE){
-                    stage.close();
+                    stage1.close();
                     small();
                 }
             }
@@ -52,7 +53,8 @@ public class one extends Application {
         });
 
 
-//        stage.show();
+        stage.show();
+        stage1 = stage;
         small();///////////////////////////
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         stage.setX((screenBounds.getWidth() - 600) / 2);
@@ -103,6 +105,7 @@ public class one extends Application {
         Runtime.getRuntime().exec(ccc);
         Runtime.getRuntime().exec(eee);
         Runtime.getRuntime().exec(lock);
+        //System.out.println("第一次测试更新");
 
     }
 }
