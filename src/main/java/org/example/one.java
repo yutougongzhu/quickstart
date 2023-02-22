@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public class one extends Application {
+    Boolean issmall = false;
     Stage stage1 ;
     @Override
     public void start(Stage stage) throws Exception {
@@ -41,7 +42,12 @@ public class one extends Application {
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode()== KeyCode.ESCAPE){
                     stage1.close();
-                    small();
+                    if (issmall){
+
+                    }else {
+                        issmall = true;
+                        small();
+                    }
                 }
             }
         });
@@ -53,12 +59,20 @@ public class one extends Application {
         });
 
 
-        stage.show();
-        stage1 = stage;
-        small();///////////////////////////
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+
         stage.setX((screenBounds.getWidth() - 600) / 2);
         stage.setY((screenBounds.getHeight() - 400) / 2);
+        stage.show();
+        stage1 = stage;
+        if (issmall){
+
+        }else {
+
+            small();///////////////////////////
+            issmall = true;
+        }
+
 
     }
 
@@ -105,7 +119,7 @@ public class one extends Application {
         Runtime.getRuntime().exec(ccc);
         Runtime.getRuntime().exec(eee);
         Runtime.getRuntime().exec(lock);
-        //System.out.println("第一次测试更新");
+        System.out.println("第一次测试更新");
 
     }
 }
