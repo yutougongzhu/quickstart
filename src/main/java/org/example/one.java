@@ -262,9 +262,11 @@ public class one extends Application {
         ro.mouseMove(900,590);
         ro.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         ro.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-        ro.keyPress(java.awt.event.KeyEvent.VK_CONTROL);
-        ro.keyPress(java.awt.event.KeyEvent.VK_V);
-        ro.keyRelease(java.awt.event.KeyEvent.VK_CONTROL);
-        ro.keyRelease(java.awt.event.KeyEvent.VK_V);
+//        ro.keyPress(java.awt.event.KeyEvent.VK_CONTROL);
+//        ro.keyPress(java.awt.event.KeyEvent.VK_V);
+//        ro.keyRelease(java.awt.event.KeyEvent.VK_CONTROL);
+//        ro.keyRelease(java.awt.event.KeyEvent.VK_V);
+        ro.keyPress(java.awt.event.KeyEvent.VK_ENTER);
+        ro.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
     }
 }
