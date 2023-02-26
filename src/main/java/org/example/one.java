@@ -67,7 +67,6 @@ public class one extends Application {
             public void handle(WindowEvent windowEvent) {
                 if (issmall){
                 }else {
-
                     issmall = true;
                     small();///////////////////////////
                 }
@@ -107,7 +106,15 @@ public class one extends Application {
                 StringSelection text  = new StringSelection(pa);
                 clipboard.setContents(text,null);
                 System.out.println(pa);
-                onqq();
+                try {
+                    onqq();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (AWTException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -249,24 +256,56 @@ public class one extends Application {
         return str;
 
     }
-    public static  void onqq(){
-        Robot ro = null;
-        try {
-            ro = new Robot();
-        Thread.sleep(5000);
-        } catch (AWTException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        ro.mouseMove(900,590);
-        ro.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        ro.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-//        ro.keyPress(java.awt.event.KeyEvent.VK_CONTROL);
-//        ro.keyPress(java.awt.event.KeyEvent.VK_V);
-//        ro.keyRelease(java.awt.event.KeyEvent.VK_CONTROL);
-//        ro.keyRelease(java.awt.event.KeyEvent.VK_V);
-        ro.keyPress(java.awt.event.KeyEvent.VK_ENTER);
-        ro.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
-    }
+//    public static  void onqq(){//公测方法
+//        Robot ro = null;
+//        try {
+//            ro = new Robot();
+//        Thread.sleep(5000);
+//        } catch (AWTException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        ro.mouseMove(900,590);
+//        ro.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+//        ro.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+////        ro.keyPress(java.awt.event.KeyEvent.VK_CONTROL);
+////        ro.keyPress(java.awt.event.KeyEvent.VK_V);
+////        ro.keyRelease(java.awt.event.KeyEvent.VK_CONTROL);
+////        ro.keyRelease(java.awt.event.KeyEvent.VK_V);
+//        ro.keyPress(java.awt.event.KeyEvent.VK_ENTER);
+//        ro.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
+//    }
+public void onqq() throws IOException, AWTException, InterruptedException {
+    Robot ro = new Robot();
+    Thread.sleep(5000);
+    ro.mouseMove(900,590);
+    ro.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+    ro.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+    ro.keyPress(java.awt.event.KeyEvent.VK_SHIFT);
+    ro.keyPress(java.awt.event.KeyEvent.VK_M);
+    ro.keyRelease(java.awt.event.KeyEvent.VK_M);
+    ro.keyPress(java.awt.event.KeyEvent.VK_Z);
+    ro.keyRelease(java.awt.event.KeyEvent.VK_Z);
+    ro.keyRelease(java.awt.event.KeyEvent.VK_SHIFT);
+    ro.keyPress(java.awt.event.KeyEvent.VK_Y);
+    ro.keyRelease(java.awt.event.KeyEvent.VK_Y);
+    ro.keyPress(java.awt.event.KeyEvent.VK_3);
+    ro.keyRelease(java.awt.event.KeyEvent.VK_3);
+    ro.keyPress(java.awt.event.KeyEvent.VK_1);
+    ro.keyRelease(java.awt.event.KeyEvent.VK_1);
+    ro.keyPress(java.awt.event.KeyEvent.VK_4);
+    ro.keyRelease(java.awt.event.KeyEvent.VK_4);
+    ro.keyPress(java.awt.event.KeyEvent.VK_1);
+    ro.keyRelease(java.awt.event.KeyEvent.VK_1);
+    ro.keyPress(java.awt.event.KeyEvent.VK_5);
+    ro.keyRelease(java.awt.event.KeyEvent.VK_5);
+    ro.keyPress(java.awt.event.KeyEvent.VK_9);
+    ro.keyRelease(java.awt.event.KeyEvent.VK_9);
+    ro.keyPress(java.awt.event.KeyEvent.VK_ENTER);
+    ro.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
+}
+
+
+
 }
