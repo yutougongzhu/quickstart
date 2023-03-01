@@ -11,16 +11,13 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -29,50 +26,18 @@ import java.net.URL;
 
 public class one extends Application {
     Boolean issmall = false;
-    Stage stage1 ;
-
 
     @Override
     public void start(final Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/one.fxml"));
+        final Parent root = FXMLLoader.load(getClass().getResource("/fxml/one.fxml"));
         final Parent qqjiemian = FXMLLoader.load(getClass().getResource("/fxml/qq.fxml"));
         Scene scene = new Scene(root);
+        final Scene qwe = new Scene(qqjiemian);
         stage.setTitle("快捷程序");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.getIcons().add(new Image("/img/ico.png"));
         Platform.setImplicitExit(false);
-
-        if (SplashScreen.getSplashScreen() != null) {
-            Thread.sleep(1000);
-            SplashScreen.getSplashScreen().close();
-        }
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode()== KeyCode.ESCAPE){
-                    stage1.close();
-                    if (issmall){
-
-                    }else {
-                        issmall = true;
-                        small();
-                    }
-                }
-            }
-        });
-
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent windowEvent) {
-                if (issmall){
-                }else {
-                    issmall = true;
-                    small();///////////////////////////
-                }
-            }
-        });
-
         final Button butqq = (Button) root.lookup("#butqq") ;
         final Button firechose = (Button) qqjiemian.lookup("#fire") ;
         final Button login = (Button) qqjiemian.lookup("#login") ;
@@ -80,6 +45,35 @@ public class one extends Application {
         final Button peizhi = (Button) qqjiemian.lookup("#peizhi") ;
         final javafx.scene.control.TextField textField = (javafx.scene.control.TextField) qqjiemian.lookup("#tf");
         final javafx.scene.control.TextField passfield = (javafx.scene.control.TextField) qqjiemian.lookup("#pass");
+
+
+        //程序关闭
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                System.exit(1);
+            }
+        });
+
+        //加载界面
+        if (SplashScreen.getSplashScreen() != null) {
+            Thread.sleep(1000);
+            SplashScreen.getSplashScreen().close();
+        }
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                esc(keyEvent,stage);
+            }
+        });
+        qwe.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                esc(keyEvent,stage);
+            }
+        });
+
         exitqq.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
             @Override
             public void handle(javafx.event.ActionEvent actionEvent) {
@@ -91,6 +85,7 @@ public class one extends Application {
                 }
             }
         });
+
         login.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
             @Override
             public void handle(javafx.event.ActionEvent actionEvent) {
@@ -106,15 +101,7 @@ public class one extends Application {
                 StringSelection text  = new StringSelection(pa);
                 clipboard.setContents(text,null);
                 System.out.println(pa);
-                try {
-                    onqq();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (AWTException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                onqq();
 
             }
         });
@@ -123,9 +110,7 @@ public class one extends Application {
             @Override
             public void handle(javafx.event.ActionEvent actionEvent) {
 //                butqq.setStyle("-fx-background-image: url(/img/butqqis.png)");
-                Scene qwe = new Scene(qqjiemian);
                 stage.setScene(qwe);
-
                 try {
                     String sss = read("qwe.txt");
                     String ddd = read("pasd.txt");
@@ -168,7 +153,7 @@ public class one extends Application {
                     FileWriter fileWriter = new FileWriter(fil);
                     fileWriter.write(pa);
                     fileWriter.close();
-                    System.out.println(pa);
+//                    System.out.println(pa);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -176,33 +161,34 @@ public class one extends Application {
             }
         });
 
-
-
-
-
-
-
+        //设置窗口位置
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         stage.setX((screenBounds.getWidth() - 600) / 2);
         stage.setY((screenBounds.getHeight() - 400) / 2);
         stage.show();
-        stage1 = stage;
-        if (issmall){
-        }else {
-
-            issmall = true;
-            small();///////////////////////////
-        }
-
-
 
     }
 
+    private void esc(KeyEvent keyEvent ,Stage stage ) {
 
-    private void small(){
+        if (keyEvent.getCode()== KeyCode.ESCAPE){
+            stage.hide();
+            if (issmall){
+
+            }else {
+
+                issmall = true;
+                small(stage);
+            }
+        }
+    }
+
+    private void small(final Stage stage){
         MenuItem exit = new MenuItem("关闭");
         MenuItem walk = new MenuItem("离开");
+        MenuItem xianshi = new MenuItem("显示");
         PopupMenu popupMenu = new PopupMenu();
+        popupMenu.add(xianshi);
         popupMenu.add(walk);
         popupMenu.add(exit);
         URL url = this.getClass().getResource("/img/ico16.png");
@@ -216,6 +202,19 @@ public class one extends Application {
         } catch (AWTException e) {
             e.printStackTrace();
         }
+        xianshi.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        stage.show();//无法在启动窗口
+                    }
+                });
+
+            }
+        });
+
         exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -235,6 +234,7 @@ public class one extends Application {
             }
         });
     }
+
     private void live() throws IOException, AWTException {
         String ccc = "taskkill /f /im qq.exe";
         String eee = "taskkill /f /im Wechat.exe";
@@ -252,59 +252,61 @@ public class one extends Application {
         while ((length = fileReader.read(data))!=-1){
              str = new String(data,0,length);
         }
-        System.out.println(str);
+//        System.out.println(str);
         return str;
 
     }
-//    public static  void onqq(){//公测方法
-//        Robot ro = null;
-//        try {
-//            ro = new Robot();
-//        Thread.sleep(5000);
-//        } catch (AWTException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        ro.mouseMove(900,590);
-//        ro.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-//        ro.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-////        ro.keyPress(java.awt.event.KeyEvent.VK_CONTROL);
-////        ro.keyPress(java.awt.event.KeyEvent.VK_V);
-////        ro.keyRelease(java.awt.event.KeyEvent.VK_CONTROL);
-////        ro.keyRelease(java.awt.event.KeyEvent.VK_V);
-//        ro.keyPress(java.awt.event.KeyEvent.VK_ENTER);
-//        ro.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
-//    }
-public void onqq() throws IOException, AWTException, InterruptedException {
-    Robot ro = new Robot();
-    Thread.sleep(5000);
-    ro.mouseMove(900,590);
-    ro.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-    ro.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-    ro.keyPress(java.awt.event.KeyEvent.VK_SHIFT);
-    ro.keyPress(java.awt.event.KeyEvent.VK_M);
-    ro.keyRelease(java.awt.event.KeyEvent.VK_M);
-    ro.keyPress(java.awt.event.KeyEvent.VK_Z);
-    ro.keyRelease(java.awt.event.KeyEvent.VK_Z);
-    ro.keyRelease(java.awt.event.KeyEvent.VK_SHIFT);
-    ro.keyPress(java.awt.event.KeyEvent.VK_Y);
-    ro.keyRelease(java.awt.event.KeyEvent.VK_Y);
-    ro.keyPress(java.awt.event.KeyEvent.VK_3);
-    ro.keyRelease(java.awt.event.KeyEvent.VK_3);
-    ro.keyPress(java.awt.event.KeyEvent.VK_1);
-    ro.keyRelease(java.awt.event.KeyEvent.VK_1);
-    ro.keyPress(java.awt.event.KeyEvent.VK_4);
-    ro.keyRelease(java.awt.event.KeyEvent.VK_4);
-    ro.keyPress(java.awt.event.KeyEvent.VK_1);
-    ro.keyRelease(java.awt.event.KeyEvent.VK_1);
-    ro.keyPress(java.awt.event.KeyEvent.VK_5);
-    ro.keyRelease(java.awt.event.KeyEvent.VK_5);
-    ro.keyPress(java.awt.event.KeyEvent.VK_9);
-    ro.keyRelease(java.awt.event.KeyEvent.VK_9);
-    ro.keyPress(java.awt.event.KeyEvent.VK_ENTER);
-    ro.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
-}
+
+    public static  void onqq(){//公测方法
+        Robot ro = null;
+        try {
+            ro = new Robot();
+        Thread.sleep(5000);
+        } catch (AWTException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ro.mouseMove(900,590);
+        ro.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        ro.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+//        ro.keyPress(java.awt.event.KeyEvent.VK_CONTROL);
+//        ro.keyPress(java.awt.event.KeyEvent.VK_V);
+//        ro.keyRelease(java.awt.event.KeyEvent.VK_CONTROL);
+//        ro.keyRelease(java.awt.event.KeyEvent.VK_V);
+        ro.keyPress(java.awt.event.KeyEvent.VK_ENTER);
+        ro.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
+    }
+
+//public void onqq() throws IOException, AWTException, InterruptedException {
+//    Robot ro = new Robot();
+//    Thread.sleep(5000);
+//    ro.mouseMove(900,590);
+//    ro.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+//    ro.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+//    ro.keyPress(java.awt.event.KeyEvent.VK_SHIFT);
+//    ro.keyPress(java.awt.event.KeyEvent.VK_M);
+//    ro.keyRelease(java.awt.event.KeyEvent.VK_M);
+//    ro.keyPress(java.awt.event.KeyEvent.VK_Z);
+//    ro.keyRelease(java.awt.event.KeyEvent.VK_Z);
+//    ro.keyRelease(java.awt.event.KeyEvent.VK_SHIFT);
+//    ro.keyPress(java.awt.event.KeyEvent.VK_Y);
+//    ro.keyRelease(java.awt.event.KeyEvent.VK_Y);
+//    ro.keyPress(java.awt.event.KeyEvent.VK_3);
+//    ro.keyRelease(java.awt.event.KeyEvent.VK_3);
+//    ro.keyPress(java.awt.event.KeyEvent.VK_1);
+//    ro.keyRelease(java.awt.event.KeyEvent.VK_1);
+//    ro.keyPress(java.awt.event.KeyEvent.VK_4);
+//    ro.keyRelease(java.awt.event.KeyEvent.VK_4);
+//    ro.keyPress(java.awt.event.KeyEvent.VK_1);
+//    ro.keyRelease(java.awt.event.KeyEvent.VK_1);
+//    ro.keyPress(java.awt.event.KeyEvent.VK_5);
+//    ro.keyRelease(java.awt.event.KeyEvent.VK_5);
+//    ro.keyPress(java.awt.event.KeyEvent.VK_9);
+//    ro.keyRelease(java.awt.event.KeyEvent.VK_9);
+//    ro.keyPress(java.awt.event.KeyEvent.VK_ENTER);
+//    ro.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
+//}
 
 
 
