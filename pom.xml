@@ -4,7 +4,7 @@
 
   <groupId>org.example</groupId>
   <artifactId>quickstart</artifactId>
-  <version>2.0.1</version>
+  <version>1.0.4</version>
 
   <name>quickstart</name>
   <!-- FIXME change it to the project's website -->
@@ -34,7 +34,12 @@
       <artifactId>javafx-fxml</artifactId>
       <version>17.0.2</version>
     </dependency>
-
+<!--    全局监听包-->
+    <dependency>
+      <groupId>com.1stleg</groupId>
+      <artifactId>jnativehook</artifactId>
+      <version>2.1.0</version>
+    </dependency>
 
   </dependencies>
 

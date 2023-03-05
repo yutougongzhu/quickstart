@@ -11,10 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.FileChooser;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.*;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -25,7 +24,9 @@ import java.io.*;
 import java.net.URL;
 
 public class one extends Application {
-    Boolean issmall = false;
+    static Boolean issmall = false;
+    AnchorPane anchorPane;
+    static Stage stage1;
 
     @Override
     public void start(final Stage stage) throws Exception {
@@ -36,6 +37,8 @@ public class one extends Application {
         stage.setTitle("快捷程序");
         stage.setResizable(false);
         stage.setScene(scene);
+        anchorPane = (AnchorPane)root.lookup("#behand");
+        System.out.println(anchorPane);
         stage.getIcons().add(new Image("/img/ico.png"));
         Platform.setImplicitExit(false);
         final Button butqq = (Button) root.lookup("#butqq") ;
@@ -43,6 +46,7 @@ public class one extends Application {
         final Button login = (Button) qqjiemian.lookup("#login") ;
         final Button exitqq = (Button) qqjiemian.lookup("#exitqq") ;
         final Button peizhi = (Button) qqjiemian.lookup("#peizhi") ;
+        final Button say = (Button) root.lookup("#say") ;
         final javafx.scene.control.TextField textField = (javafx.scene.control.TextField) qqjiemian.lookup("#tf");
         final javafx.scene.control.TextField passfield = (javafx.scene.control.TextField) qqjiemian.lookup("#pass");
 
@@ -60,6 +64,12 @@ public class one extends Application {
             Thread.sleep(1000);
             SplashScreen.getSplashScreen().close();
         }
+        say.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
+            @Override
+            public void handle(javafx.event.ActionEvent actionEvent) {
+                JOptionPane.showMessageDialog(null,"1.esc可以进入托盘模式\n2.f7可以进入cmd控制台模式\n3.右上角关闭退出软件");
+            }
+        });
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -109,8 +119,8 @@ public class one extends Application {
         butqq.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
             @Override
             public void handle(javafx.event.ActionEvent actionEvent) {
-//                butqq.setStyle("-fx-background-image: url(/img/butqqis.png)");
                 stage.setScene(qwe);
+                anchorPane = (AnchorPane)qqjiemian.lookup("#behand");
                 try {
                     String sss = read("qwe.txt");
                     String ddd = read("pasd.txt");
@@ -146,14 +156,12 @@ public class one extends Application {
                 chooser.setTitle("选择qq路径");
                 chooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("exe","QQScLauncher.exe"));
                 String pa = chooser.showOpenDialog(stage).getAbsolutePath();
-//                System.out.println();
                 textField.setText(pa);
                 File fil = new File("qwe.txt");
                 try {
                     FileWriter fileWriter = new FileWriter(fil);
                     fileWriter.write(pa);
                     fileWriter.close();
-//                    System.out.println(pa);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -166,6 +174,8 @@ public class one extends Application {
         stage.setX((screenBounds.getWidth() - 600) / 2);
         stage.setY((screenBounds.getHeight() - 400) / 2);
         stage.show();
+        stage1=stage;
+        lesson ll  = new lesson();
 
     }
 
@@ -183,7 +193,7 @@ public class one extends Application {
         }
     }
 
-    private void small(final Stage stage){
+    public void small(final Stage stage){
         MenuItem exit = new MenuItem("关闭");
         MenuItem walk = new MenuItem("离开");
         MenuItem xianshi = new MenuItem("显示");
@@ -208,7 +218,8 @@ public class one extends Application {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        stage.show();//无法在启动窗口
+//                        显示窗口
+                        showmainwind();
                     }
                 });
 
@@ -252,9 +263,7 @@ public class one extends Application {
         while ((length = fileReader.read(data))!=-1){
              str = new String(data,0,length);
         }
-//        System.out.println(str);
         return str;
-
     }
 
     public static  void onqq(){//公测方法
@@ -270,44 +279,24 @@ public class one extends Application {
         ro.mouseMove(900,590);
         ro.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         ro.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-//        ro.keyPress(java.awt.event.KeyEvent.VK_CONTROL);
-//        ro.keyPress(java.awt.event.KeyEvent.VK_V);
-//        ro.keyRelease(java.awt.event.KeyEvent.VK_CONTROL);
-//        ro.keyRelease(java.awt.event.KeyEvent.VK_V);
+        /**
+         * qq登录窗口没法复制
+         */
         ro.keyPress(java.awt.event.KeyEvent.VK_ENTER);
         ro.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
     }
 
-//public void onqq() throws IOException, AWTException, InterruptedException {
-//    Robot ro = new Robot();
-//    Thread.sleep(5000);
-//    ro.mouseMove(900,590);
-//    ro.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-//    ro.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-//    ro.keyPress(java.awt.event.KeyEvent.VK_SHIFT);
-//    ro.keyPress(java.awt.event.KeyEvent.VK_M);
-//    ro.keyRelease(java.awt.event.KeyEvent.VK_M);
-//    ro.keyPress(java.awt.event.KeyEvent.VK_Z);
-//    ro.keyRelease(java.awt.event.KeyEvent.VK_Z);
-//    ro.keyRelease(java.awt.event.KeyEvent.VK_SHIFT);
-//    ro.keyPress(java.awt.event.KeyEvent.VK_Y);
-//    ro.keyRelease(java.awt.event.KeyEvent.VK_Y);
-//    ro.keyPress(java.awt.event.KeyEvent.VK_3);
-//    ro.keyRelease(java.awt.event.KeyEvent.VK_3);
-//    ro.keyPress(java.awt.event.KeyEvent.VK_1);
-//    ro.keyRelease(java.awt.event.KeyEvent.VK_1);
-//    ro.keyPress(java.awt.event.KeyEvent.VK_4);
-//    ro.keyRelease(java.awt.event.KeyEvent.VK_4);
-//    ro.keyPress(java.awt.event.KeyEvent.VK_1);
-//    ro.keyRelease(java.awt.event.KeyEvent.VK_1);
-//    ro.keyPress(java.awt.event.KeyEvent.VK_5);
-//    ro.keyRelease(java.awt.event.KeyEvent.VK_5);
-//    ro.keyPress(java.awt.event.KeyEvent.VK_9);
-//    ro.keyRelease(java.awt.event.KeyEvent.VK_9);
-//    ro.keyPress(java.awt.event.KeyEvent.VK_ENTER);
-//    ro.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
-//}
 
+    public static void showmainwind() {
+        if (one.issmall) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    stage1.show();
+                }
+            });
+        }
 
+    }
 
 }
