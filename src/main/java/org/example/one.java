@@ -67,7 +67,8 @@ public class one extends Application {
         say.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
             @Override
             public void handle(javafx.event.ActionEvent actionEvent) {
-                JOptionPane.showMessageDialog(null,"1.esc可以进入托盘模式\n2.f7可以进入cmd控制台模式\n3.右上角关闭退出软件");
+                JOptionPane.showMessageDialog(null,"1.esc可以进入托盘模式\n2.f7可以进入cmd控制台模式\n3.右上角关闭退出软件\n" +
+                        "4.QQ密码只能为大小写字母加数字\n5.自动输入QQ密码前确认电脑大写关闭");
             }
         });
 
