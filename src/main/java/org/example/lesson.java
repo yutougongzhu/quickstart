@@ -34,8 +34,12 @@ public class lesson   implements NativeKeyListener , NativeMouseInputListener {
     @Override
     public void nativeKeyPressed(NativeKeyEvent nativeKeyEvent) {
 //        System.out.println(nativeKeyEvent.getKeyCode());//29ctrl  50m   65f7
-            if (nativeKeyEvent.getKeyCode()==65){
+            if (nativeKeyEvent.getKeyCode()==64){
                 new setcmd();
+            }else if (nativeKeyEvent.getKeyCode()==65){
+                one.onqq();
+            }else if (nativeKeyEvent.getKeyCode()==66){
+                one.overqq();
             }
     }
 

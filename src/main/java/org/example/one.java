@@ -32,16 +32,16 @@ public class one extends Application {
     public void start(final Stage stage) throws Exception {
         final Parent root = FXMLLoader.load(getClass().getResource("/fxml/one.fxml"));
         final Parent qqjiemian = FXMLLoader.load(getClass().getResource("/fxml/qq.fxml"));
-        Scene scene = new Scene(root);
+        final Scene scene = new Scene(root);
         final Scene qwe = new Scene(qqjiemian);
         stage.setTitle("快捷程序");
         stage.setResizable(false);
         stage.setScene(scene);
         anchorPane = (AnchorPane)root.lookup("#behand");
-        System.out.println(anchorPane);
         stage.getIcons().add(new Image("/img/ico.png"));
         Platform.setImplicitExit(false);
         final Button butqq = (Button) root.lookup("#butqq") ;
+        final Button butqq2 = (Button) qqjiemian.lookup("#butqq") ;
         final Button firechose = (Button) qqjiemian.lookup("#fire") ;
         final Button login = (Button) qqjiemian.lookup("#login") ;
         final Button exitqq = (Button) qqjiemian.lookup("#exitqq") ;
@@ -49,8 +49,6 @@ public class one extends Application {
         final Button say = (Button) root.lookup("#say") ;
         final javafx.scene.control.TextField textField = (javafx.scene.control.TextField) qqjiemian.lookup("#tf");
         final javafx.scene.control.TextField passfield = (javafx.scene.control.TextField) qqjiemian.lookup("#pass");
-
-
         //程序关闭
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -100,20 +98,22 @@ public class one extends Application {
         login.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
             @Override
             public void handle(javafx.event.ActionEvent actionEvent) {
-                String qqw = textField.getText();
-                String pa = passfield.getText();
-                Runtime run = Runtime.getRuntime();
-                try {
-                    run.exec(qqw);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                StringSelection text  = new StringSelection(pa);
-                clipboard.setContents(text,null);
-                System.out.println(pa);
+                /**
+                 * 复制pass到粘贴板
+                 */
+//                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+//                StringSelection text  = new StringSelection(pa);
+//                clipboard.setContents(text,null);
+//                System.out.println(pa);
                 onqq();
 
+            }
+        });
+
+        butqq2.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
+            @Override
+            public void handle(javafx.event.ActionEvent actionEvent) {
+                stage.setScene(scene);
             }
         });
 
@@ -121,7 +121,6 @@ public class one extends Application {
             @Override
             public void handle(javafx.event.ActionEvent actionEvent) {
                 stage.setScene(qwe);
-                anchorPane = (AnchorPane)qqjiemian.lookup("#behand");
                 try {
                     String sss = read("qwe.txt");
                     String ddd = read("pasd.txt");
@@ -268,6 +267,12 @@ public class one extends Application {
     }
 
     public static  void onqq(){//公测方法
+        Runtime run = Runtime.getRuntime();
+        try {
+            run.exec(read("qwe.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Robot ro = null;
         try {
             ro = new Robot();
@@ -278,11 +283,15 @@ public class one extends Application {
             e.printStackTrace();
         }
         ro.mouseMove(900,590);
-        ro.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        ro.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+//        ro.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+//        ro.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
         /**
          * qq登录窗口没法复制
          */
+        try {
+            new keymove(read("pasd.txt"));
+        } catch (IOException e) {
+        }
         ro.keyPress(java.awt.event.KeyEvent.VK_ENTER);
         ro.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
     }
@@ -298,6 +307,14 @@ public class one extends Application {
             });
         }
 
+    }
+    public static void overqq(){
+        String ccc = "taskkill /f /im qq.exe";
+        try {
+            Runtime.getRuntime().exec(ccc);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
