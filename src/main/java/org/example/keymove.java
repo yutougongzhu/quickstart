@@ -38,6 +38,11 @@ public class keymove {
                     ro.keyPress(a);
                     ro.keyRelease(a);
                 }
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         } catch (AWTException e) {
             e.printStackTrace();

@@ -15,11 +15,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
 import java.io.*;
 import java.net.URL;
 
@@ -65,8 +62,13 @@ public class one extends Application {
         say.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
             @Override
             public void handle(javafx.event.ActionEvent actionEvent) {
-                JOptionPane.showMessageDialog(null,"1.esc可以进入托盘模式\n2.f7可以进入cmd控制台模式\n3.右上角关闭退出软件\n" +
-                        "4.QQ密码只能为大小写字母加数字\n5.自动输入QQ密码前确认电脑大写关闭");
+                JOptionPane.showMessageDialog(null,"1.esc可以进入托盘模式\n" +
+                        "2.f6可以进入cmd控制台模式\n" +
+                        "3.右上角关闭退出软件\n" +
+                        "4.QQ密码只能为大小写字母加数字\n" +
+                        "5.自动输入QQ密码前确认电脑大写关闭\n"+
+                        "6.f7可以自动登录QQ\n"+
+                        "7.f8可以自动退出QQ");
             }
         });
 
@@ -282,7 +284,7 @@ public class one extends Application {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        ro.mouseMove(900,590);
+//        ro.mouseMove(900,590);
 //        ro.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 //        ro.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
         /**
